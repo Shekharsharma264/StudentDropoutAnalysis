@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
-function DropoutByGenderChart({ data }) {
+function DropoutByGenderChart({ data = [] }) {
   const counts = { Male: 0, Female: 0 };
 
   data.forEach((row) => {

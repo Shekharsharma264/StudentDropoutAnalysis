@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Papa from 'papaparse';
-import { Link, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import AnalysisPage from './pages/AnalysisPage';
 import AboutPage from './pages/About';
-import { useEffect, useState } from 'react';
+import ContactPage from './pages/ContactPage';
+// import FeedbackPage from './pages/FeedbackPage';
+import Layout from './components/Layout';
 
 function App() {
   const [data, setData] = useState([]);
@@ -19,24 +22,15 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <header>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/analysis">Analysis</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-          </ul>
-        </nav>
-      </header>
-
+    <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/analysis" element={<AnalysisPage data={data} />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        {/* <Route path="/feedback" element={<FeedbackPage />} /> */}
       </Routes>
-    </div>
+    </Layout>
   );
 }
 

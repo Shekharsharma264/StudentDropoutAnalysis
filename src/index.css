@@ -1,4 +1,12 @@
-/* Navigation Styles */
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
 nav ul {
   display: flex;
   justify-content: space-around;
