@@ -15,7 +15,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <h1 className="text-xl font-bold text-indigo-600">EduProtect</h1>
-        <ul className="flex gap-6 text-sm font-medium text-gray-700">
+        <ul className="flex gap-6 text-sm font-medium text-gray-700 rounded-2xl bg-pink-500">
           {navItems.map((item) => (
             <li key={item.path}>
               <Link
