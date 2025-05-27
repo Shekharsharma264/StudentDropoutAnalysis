@@ -1,31 +1,50 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
 
 function DropoutByLocationChart({ data }) {
-  const counts = { Rural: 0, Urban: 0 };
+  const counts = { 'Village': 0, 'City/Town': 0 };
 
   data.forEach((row) => {
     const location = row.Location?.trim();
     const status = row.Dropout_Status?.trim();
 
-    if (status === 'Dropout' && (location === 'Rural' || location === 'Urban')) {
-      counts[location]++;
+    let normalizedLocation = null;
+    if (location === 'Rural') normalizedLocation = 'Village';
+    else if (location === 'Urban') normalizedLocation = 'City/Town';
+
+    if (status === 'Dropout' && normalizedLocation) {
+      counts[normalizedLocation]++;
     }
   });
 
   const chartData = [
-    { location: 'Rural', count: counts.Rural },
-    { location: 'Urban', count: counts.Urban },
+    { location: 'Village', count: counts['Village'] },
+    { location: 'City/Town', count: counts['City/Town'] }
   ];
 
   return (
-    <BarChart width={500} height={300} data={chartData}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="location" />
-      <YAxis />
-      <Tooltip />
-      <Bar dataKey="count" fill="#8884d8" />
-    </BarChart>
+    <div className="w-full h-80">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="location"
+            label={{ value: 'Area Type (India)', position: 'insideBottom', offset: -5 }}
+          />
+          <YAxis label={{ value: 'Dropout Count', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Bar dataKey="count" fill="#4f46e5" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
