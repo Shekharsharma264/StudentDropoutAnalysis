@@ -1,5 +1,7 @@
-import DropoutTrendsChart from "../../components/DropoutTrendsChart";
 import DropoutByLocationBar from '../../components/Location/DropoutByLocationBar'
+import LocationPieChart from '../../components/Location/LocationPieChart'
+import LocationDoughnut from '../../components/Location/LocationDoughnut'
+
 export default function LocationAnalysis({ data }) {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
@@ -11,8 +13,12 @@ export default function LocationAnalysis({ data }) {
         <DropoutByLocationBar data={data} />
       </div>
 
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <LocationPieChart data={data} />
+      </div>
+
       <div className="bg-white p-6 rounded-2xl shadow-md">
-        <DropoutTrendsChart />
+        <LocationDoughnut data={data} />
       </div>
     </div>
   );

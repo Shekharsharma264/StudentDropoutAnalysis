@@ -6,6 +6,39 @@
 * {
   box-sizing: border-box;
 }
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6366f1; /* Thumb color (blue or any color that fits your theme) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid #f3f4f6; /* Border around the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f3f4f6; /* Track color (light grey or similar color to your background) */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-button {
+  display: none; /* Remove the up and down buttons from the scrollbar */
+}
+
+/* Scrollbar for Firefox */
+scrollbar {
+  width: 8px;
+}
+
+scrollbar-thumb {
+  background-color: #6366f1;
+  border-radius: 10px;
+}
+
+scrollbar-track {
+  background-color: #f3f4f6;
+}
 
 body {
   margin: 0;

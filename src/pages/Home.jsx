@@ -51,16 +51,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Recommendations Preview */}
+      <section className="py-16 bg-indigo-50">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h2 className="text-2xl font-bold text-indigo-700 mb-4">Our Top Recommendations</h2>
+          <p className="text-gray-600 mb-6">
+            See how we can reduce dropout rates with targeted interventions and policy actions.
+          </p>
+          <Link
+            to="/recommendations"
+            className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full font-medium transition"
+          >
+            View Recommendations
+          </Link>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="bg-indigo-600 text-white text-center py-12 px-4">
         <h2 className="text-2xl font-bold mb-4">Want to learn more?</h2>
         <p className="mb-6">Explore detailed dropout analysis or reach out with your ideas.</p>
-        <Link
-          to="/about"
-          className="bg-white text-indigo-600 hover:bg-gray-100 px-5 py-2 rounded-full font-medium"
-        >
-          About Project
-        </Link>
+        <div className="flex flex-col md:flex-row gap-4 justify-center">
+          <Link
+            to="/about"
+            className="bg-white text-indigo-600 hover:bg-gray-100 px-5 py-2 rounded-full font-medium"
+          >
+            About Project
+          </Link>
+          <Link
+            to="/contact"
+            className="bg-white text-indigo-600 hover:bg-gray-100 px-5 py-2 rounded-full font-medium"
+          >
+            Contact Us
+          </Link>
+          <Link
+            to="/feedback"
+            className="bg-white text-indigo-600 hover:bg-gray-100 px-5 py-2 rounded-full font-medium"
+          >
+            Give Feedback
+          </Link>
+        </div>
       </section>
     </div>
   );
@@ -68,10 +98,16 @@ export default function Home() {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="p-6 rounded-2xl shadow-md hover:shadow-lg transition bg-gray-50 text-center">
+    <motion.div
+      className="p-6 rounded-2xl shadow-md hover:shadow-lg transition bg-gray-50 text-center"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+    >
       <div className="flex justify-center mb-4">{icon}</div>
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
       <p className="text-sm text-gray-600">{description}</p>
-    </div>
+    </motion.div>
   );
 }

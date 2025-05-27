@@ -1,153 +1,111 @@
-// components/DropoutTrendsChart.js
-import React, { useEffect, useState } from 'react';
-import Papa from 'papaparse';
+import React from "react";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
   PointElement,
-  LinearScale,
-  Title,
   CategoryScale,
+  LinearScale,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+} from "chart.js";
 
-// Register Chart.js components
-ChartJS.register(LineElement, PointElement, LinearScale, Title, CategoryScale, Tooltip, Legend);
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-export default function DropoutTrendsChart() {
-  const [data, setData] = useState(null);
+export default function DropoutTrendsByStandardLineChart({ data }) {
+  const standards = [...new Set(data.map((d) => parseInt(d.Standard)))].sort((a, b) => a - b);
 
-  useEffect(() => {
-    // Parse the CSV file from the public directory (ensure this path is correct)
-    Papa.parse('/SIH-Dataset.csv', {
-      download: true,
-      header: true, // Assume the first row contains headers
-      complete: (result) => {
-        console.log(result);
-        const formattedData = processData(result.data);  // Process the raw CSV data
-        setData(formattedData);
-      },
-      error: (error) => {
-        console.error('Error parsing CSV:', error);
-      },
-    });
-  }, []);
+  const countDropouts = (std, filter) =>
+    data.filter(
+      (d) =>
+        parseInt(d.Standard) === std &&
+        d.Dropout_Status === "Dropout" &&
+        filter(d)
+    ).length;
 
-  const processData = (rawData) => {
-    // Create a unique set of years
-    const years = [...new Set(rawData.map((d) => d.Standard))];
+  const maleData = standards.map((std) => countDropouts(std, (d) => d.Gender === "Male"));
+  const femaleData = standards.map((std) => countDropouts(std, (d) => d.Gender === "Female"));
+  const govtData = standards.map((std) => countDropouts(std, (d) => d.School_Type === "Government"));
+  const privateData = standards.map((std) => countDropouts(std, (d) => d.School_Type === "Private"));
+  const ruralData = standards.map((std) => countDropouts(std, (d) => d.Location === "Rural"));
+  const lowSEData = standards.map((std) => countDropouts(std, (d) => d.Socioeconomic_Status === "Low"));
 
-    // Initialize datasets for different categories
-    const datasets = {
-      male: [],
-      female: [],
-      rural: [],
-      urban: [],
-    };
-
-    years.forEach((year) => {
-      const yearData = rawData.filter((d) => d.Standard === year);
-
-      // Filter dropout rates by gender
-      datasets.male.push(
-        yearData.filter((d) => d.Gender === 'Male').length
-      );
-      datasets.female.push(
-        yearData.filter((d) => d.Gender === 'Female').length
-      );
-
-      // Filter dropout rates by location
-      datasets.rural.push(
-        yearData.filter((d) => d.Location === 'Rural').length
-      );
-      datasets.urban.push(
-        yearData.filter((d) => d.Location === 'Urban').length
-      );
-    });
-
-    return {
-      years,
-      datasets,
-    };
-  };
-
-  // If no data is available, return a loading message
-  if (!data) {
-    return <p>Loading data...</p>;
-  }
-
-  // Chart data for plotting
   const chartData = {
-    labels: data.years,
+    labels: standards.map((s) => `Class ${s}`),
     datasets: [
       {
-        label: 'Male Dropout',
-        data: data.datasets.male,
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgb(75, 192, 192)',
-        tension: 0.2,
-        pointRadius: 5,
-        pointHoverRadius: 7,
+        label: "Male",
+        data: maleData,
+        borderColor: "#36A2EB",
+        backgroundColor: "#36A2EB",
+        tension: 0.4,
       },
       {
-        label: 'Female Dropout',
-        data: data.datasets.female,
-        fill: false,
-        borderColor: 'rgb(153, 102, 255)',
-        backgroundColor: 'rgb(153, 102, 255)',
-        tension: 0.2,
-        pointRadius: 5,
-        pointHoverRadius: 7,
+        label: "Female",
+        data: femaleData,
+        borderColor: "#FF6384",
+        backgroundColor: "#FF6384",
+        tension: 0.4,
       },
       {
-        label: 'Rural Dropout',
-        data: data.datasets.rural,
-        fill: false,
-        borderColor: 'rgb(255, 159, 64)',
-        backgroundColor: 'rgb(255, 159, 64)',
-        tension: 0.2,
-        pointRadius: 5,
-        pointHoverRadius: 7,
+        label: "Government",
+        data: govtData,
+        borderColor: "#4BC0C0",
+        backgroundColor: "#4BC0C0",
+        borderDash: [5, 5],
+        tension: 0.4,
       },
       {
-        label: 'Urban Dropout',
-        data: data.datasets.urban,
-        fill: false,
-        borderColor: 'rgb(54, 162, 235)',
-        backgroundColor: 'rgb(54, 162, 235)',
-        tension: 0.2,
-        pointRadius: 5,
-        pointHoverRadius: 7,
+        label: "Private",
+        data: privateData,
+        borderColor: "#9966FF",
+        backgroundColor: "#9966FF",
+        borderDash: [5, 5],
+        tension: 0.4,
+      },
+      {
+        label: "Rural",
+        data: ruralData,
+        borderColor: "#FF9F40",
+        backgroundColor: "#FF9F40",
+        tension: 0.4,
+      },
+      {
+        label: "Low Socioeconomic",
+        data: lowSEData,
+        borderColor: "#FFCD56",
+        backgroundColor: "#FFCD56",
+        tension: 0.4,
       },
     ],
   };
 
-  // Chart options
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
+      legend: { position: "bottom" },
       title: {
         display: true,
-        text: 'Dropout Rate Trends Over Years',
+        text: "Dropout Trends by Class (Standard)",
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-        ticks: {
-          callback: function (value) {
-            return value + '%';
-          },
-        },
+        title: { display: true, text: "Number of Dropouts" },
+      },
+      x: {
+        title: { display: true, text: "Class Standard" },
       },
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Dropout Trends by Standard</h1>
+      <div className="w-full max-w-4xl mx-auto">
+        <Line data={chartData} options={options} />
+      </div>
+    </div>
+  );
 }

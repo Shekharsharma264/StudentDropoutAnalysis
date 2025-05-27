@@ -6,6 +6,7 @@ export default function Navbar() {
   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/analysis', label: 'Analysis' },
+    { path: '/Recommendations', label: 'Recommendations' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
     { path: '/feedback', label: 'Feedback' },

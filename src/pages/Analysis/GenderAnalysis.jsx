@@ -1,5 +1,6 @@
-import DropoutTrendsChart from "../../components/DropoutTrendsChart";
-import DropoutByGenderBar from '../../components/Gender/DropoutByGenderBar'
+import DropoutByGenderBar from "../../components/Gender/GenderColumn";
+import DropoutByGenderDoughnut from "../../components/Gender/GenderDoughnut";
+import GenderRatioPie from "../../components/Gender/GenderpieChart";
 export default function GenderAnalysis({ data }) {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
@@ -11,8 +12,11 @@ export default function GenderAnalysis({ data }) {
         <DropoutByGenderBar data={data} />
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-md">
-        <DropoutTrendsChart />
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <DropoutByGenderDoughnut data={data} />
+      </div>
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <GenderRatioPie data={data} />
       </div>
     </div>
   );

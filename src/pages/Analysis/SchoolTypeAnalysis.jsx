@@ -3,6 +3,8 @@
 
 import DropoutTrendsChart from "../../components/DropoutTrendsChart";
 import DropoutBySchoolTypeBar from '../../components/SchoolType/DropoutBySchoolTypeBar'
+import SchoolPieChart from '../../components/SchoolType/SchoolPieChart'
+import SchoolDoughnut from '../../components/SchoolType/SchoolDoughnut'
 
 export default function SchoolTypeAnalysis({ data }) {
   return (
@@ -14,10 +16,15 @@ export default function SchoolTypeAnalysis({ data }) {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
         <DropoutBySchoolTypeBar data={data} />
       </div>
-
-      <div className="bg-white p-6 rounded-2xl shadow-md">
-        <DropoutTrendsChart />
+      
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <SchoolPieChart data={data} />
       </div>
+      
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <SchoolDoughnut data={data} />
+      </div>
+
     </div>
   );
 }

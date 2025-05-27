@@ -14,6 +14,9 @@ import LocationAnalysis from "./pages/analysis/LocationAnalysis";
 import SchoolTypeAnalysis from "./pages/analysis/SchoolTypeAnalysis";
 import CasteAnalysis from "./pages/analysis/CasteAnalysis";
 
+// New Recommendations page
+import Recommendations from "./pages/Recommendations";
+
 function App() {
   const [data, setData] = useState([]);
 
@@ -35,6 +38,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/recommendations" element={<Recommendations />} /> {/* New route */}
 
           {/* Analysis Routes */}
           <Route path="/analysis" element={<AnalysisHome data={data} />} />

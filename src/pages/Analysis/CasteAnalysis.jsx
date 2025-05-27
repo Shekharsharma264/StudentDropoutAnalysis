@@ -1,5 +1,6 @@
-import DropoutByCasteBar from '../../components/Caste/DropoutByCasteBar'
-import DropoutTrendsChart from '../../components/DropoutTrendsChart'
+import DropoutByCasteBar from '../../components/Caste/ColumnChart'
+import CasteRatioPie from '../../components/Caste/PieChart'
+import CasteDoughnut from '../../components/Caste/DoughnutChart'
 
 export default function CasteAnalysis({ data }) {
   return (
@@ -12,9 +13,14 @@ export default function CasteAnalysis({ data }) {
         <DropoutByCasteBar data={data} />
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-md">
-        <DropoutTrendsChart />
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+        <CasteRatioPie data={data} />
       </div>
+
+      <div className="bg-white p-6 rounded-2xl shadow-md">
+        <CasteDoughnut data={data} />
+      </div>
+
     </div>
   );
 }

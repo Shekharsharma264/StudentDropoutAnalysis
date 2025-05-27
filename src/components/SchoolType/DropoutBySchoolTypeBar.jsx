@@ -10,22 +10,27 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function DropoutBySchoolTypeBar({ data }) {
-  // Filter valid rows
   const filtered = data.filter(
-    (row) => row["School_Type"] && row["Status"]
+    (row) => row["School_Type"] && row["Dropout_Status"]
   );
 
-  // Group data by School_Type
   const schoolTypes = [...new Set(filtered.map((row) => row["School_Type"]))];
 
-  // Calculate dropout rates as percentage
   const dropoutRates = schoolTypes.map((type) => {
     const total = filtered.filter((row) => row["School_Type"] === type).length;
     const dropouts = filtered.filter(
-      (row) => row["School_Type"] === type && row["Status"] === "Dropout"
+      (row) =>
+        row["School_Type"] === type && row["Dropout_Status"] === "Dropout"
     ).length;
     return total > 0 ? ((dropouts / total) * 100).toFixed(2) : 0;
   });
@@ -52,5 +57,12 @@ export default function DropoutBySchoolTypeBar({ data }) {
     },
   };
 
-  return <Bar data={chartData} options={options} />;
+  return (
+    <div>
+      <h1 className="text-2xl font-bold">Column Chart</h1>
+      <div className="w-full max-w-md h-80 mx-auto">
+        <Bar data={chartData} options={options} />;
+      </div>
+    </div>
+  );
 }
