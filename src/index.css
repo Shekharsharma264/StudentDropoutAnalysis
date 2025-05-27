@@ -3,15 +3,6 @@
   box-sizing: border-box;
 }
 
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-html, body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -21,9 +12,7 @@ body {
   font-family: sans-serif;
   background-color: #fff;
   color: #333;
-}
-body {
-  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 nav ul {
